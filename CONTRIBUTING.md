@@ -92,11 +92,6 @@ Workout-iOS/
 ├── resources/
 │   ├── exercises.json      exercise database
 │   └── media/              exercise images, one folder per exercise
-├── CLAUDE.md
 ├── CONTRIBUTING.md
 └── README.md
 ```
-
-## Git workflow
-
-`main` is a protected branch — all changes go through a PR. See `CLAUDE.md` for the full workflow used in this project.
