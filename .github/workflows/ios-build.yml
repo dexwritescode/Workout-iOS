@@ -30,6 +30,9 @@ jobs:
           key: deriveddata-${{ runner.os }}-${{ hashFiles('**/*.swift', 'Workout.xcodeproj/project.pbxproj') }}
           restore-keys: deriveddata-${{ runner.os }}-
 
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_26.4.1.app
+
       - name: Create signing config
         run: cp -f Config/Signing.xcconfig.example Config/Signing.xcconfig
 

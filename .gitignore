@@ -6,7 +6,6 @@ AGENTS.md
 
 # Local signing config — contains developer team ID, never commit
 Config/Signing.xcconfig
-ios/Config/Signing.xcconfig
 
 # Xcode
 *.xcuserstate
@@ -28,8 +27,3 @@ build/
 .build/
 .swiftpm/
 
-# Beads / Dolt files (added by bd init)
-.dolt/
-*.db
-.beads-credential-key
-.beads/
