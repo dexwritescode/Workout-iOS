@@ -17,12 +17,15 @@ struct WorkoutSummaryView: View {
     @State private var notes: String = ""
     @State private var showDiscardConfirmation = false
     @State private var showContent = false
+    @State private var showNotes = false
+    @FocusState private var notesFieldFocused: Bool
 
     var body: some View {
         // No NavigationStack — this view is presented fullScreenCover and has
         // no child navigation destinations. NavigationStack adds a UINavigationController
         // with a white UIKit background that SwiftUI modifiers cannot reach.
         VStack(spacing: 0) {
+            ScrollViewReader { proxy in
             ScrollView {
                 VStack(spacing: 0) {
                     // Trophy
@@ -64,9 +67,25 @@ struct WorkoutSummaryView: View {
                         .padding(.bottom, 16)
                         .offset(y: showContent ? 0 : 20)
                         .opacity(showContent ? 1 : 0)
+
+                    // Session note
+                    notesSection
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 24)
+                        .offset(y: showContent ? 0 : 20)
+                        .opacity(showContent ? 1 : 0)
+                        .id("notesSection")
                 }
             }
             .scrollContentBackground(.hidden)
+            .onChange(of: showNotes) { _, expanded in
+                if expanded {
+                    withAnimation {
+                        proxy.scrollTo("notesSection", anchor: .bottom)
+                    }
+                }
+            }
+            } // ScrollViewReader
 
             // Bottom buttons
             VStack(spacing: 8) {
@@ -229,6 +248,71 @@ struct WorkoutSummaryView: View {
                     .spring(response: 0.5, dampingFraction: 0.7).delay(Double(index) * 0.08),
                     value: showContent
                 )
+            }
+        }
+    }
+
+    // MARK: - Session Note
+
+    private var notesSection: some View {
+        Group {
+            if showNotes {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Label("Note", systemImage: "pencil")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundStyle(AppStyle.Colors.textSecondary)
+                        Spacer()
+                        Button("Done") {
+                            showNotes = false
+                            notesFieldFocused = false
+                        }
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(AppStyle.Colors.brand)
+                    }
+                    TextEditor(text: $notes)
+                        .focused($notesFieldFocused)
+                        .scrollContentBackground(.hidden)
+                        .background(Color.clear)
+                        .font(.system(size: 15))
+                        .foregroundStyle(AppStyle.Colors.text)
+                        .frame(minHeight: 80)
+                }
+                .padding(16)
+                .background(AppStyle.Colors.surface1)
+                .clipShape(RoundedRectangle(cornerRadius: AppStyle.Radius.card))
+                .overlay(
+                    RoundedRectangle(cornerRadius: AppStyle.Radius.card)
+                        .stroke(AppStyle.Colors.border, lineWidth: 1)
+                )
+            } else {
+                Button {
+                    showNotes = true
+                    notesFieldFocused = true
+                } label: {
+                    HStack(spacing: 10) {
+                        Image(systemName: "pencil")
+                            .foregroundStyle(AppStyle.Colors.textSecondary)
+                        Text(notes.isEmpty ? "Add a note" : notes)
+                            .font(.system(size: 15))
+                            .foregroundStyle(notes.isEmpty ? AppStyle.Colors.textSecondary : AppStyle.Colors.text)
+                            .lineLimit(3)
+                            .multilineTextAlignment(.leading)
+                        Spacer()
+                        if !notes.isEmpty {
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 12))
+                                .foregroundStyle(AppStyle.Colors.textTertiary)
+                        }
+                    }
+                    .padding(16)
+                    .background(AppStyle.Colors.surface1)
+                    .clipShape(RoundedRectangle(cornerRadius: AppStyle.Radius.card))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: AppStyle.Radius.card)
+                            .stroke(AppStyle.Colors.border, lineWidth: 1)
+                    )
+                }
             }
         }
     }
