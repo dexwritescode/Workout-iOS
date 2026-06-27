@@ -6,11 +6,13 @@ on:
     paths-ignore:
       - '**.md'
       - 'docs/**'
+      - 'Makefile'
   pull_request:
     branches: [ "main" ]
     paths-ignore:
       - '**.md'
       - 'docs/**'
+      - 'Makefile'
 
 concurrency:
   group: build-${{ github.ref }}
