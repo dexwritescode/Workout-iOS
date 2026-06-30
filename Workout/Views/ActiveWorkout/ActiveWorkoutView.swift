@@ -205,10 +205,6 @@ struct ActiveWorkoutView: View {
         ScrollView {
             VStack(spacing: 6) {
                 ForEach(Array(viewModel.allTemplateExercises.enumerated()), id: \.element.id) { index, templateExercise in
-                    let completedExercise = viewModel.sortedCompletedExercises.count > index
-                        ? viewModel.sortedCompletedExercises[index]
-                        : nil
-
                     if highlight {
                         SwipeToRevealDelete(onDelete: {
                             withAnimation(.easeInOut(duration: 0.3)) {
