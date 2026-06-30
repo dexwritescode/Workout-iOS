@@ -187,21 +187,16 @@ struct TemplatePickerView: View {
                 }
 
                 HStack(spacing: 10) {
-                    let totalSets = template.exercises.reduce(0) { $0 + $1.targetSets }
-                    let duration = max(20, totalSets * 2 + template.exercises.count * 2)
-
                     Label("\(template.exercises.count) exercises", systemImage: "square.grid.2x2")
                         .font(.system(size: 11))
                         .foregroundStyle(AppStyle.Colors.textTertiary)
-
-                    Label("~\(duration) min", systemImage: "clock")
-                        .font(.system(size: 11))
-                        .foregroundStyle(AppStyle.Colors.textTertiary)
+                        .lineLimit(1)
 
                     if let lastUsed = template.lastUsedDate {
                         Label(lastUsed.formatted(.relative(presentation: .named)), systemImage: "calendar")
                             .font(.system(size: 11))
                             .foregroundStyle(AppStyle.Colors.textTertiary)
+                            .lineLimit(1)
                     }
                 }
                 .padding(.top, 3)
