@@ -43,12 +43,6 @@ enum AppStyle {
         static let compound = Color(hex: 0x50A0FF)
         static let isolation = Color(hex: 0xA070FF)
 
-        // Legacy compatibility aliases
-        static let cardBackground = surface1
-        static let primaryBackground = background
-        static let inactive = Color(.systemGray4)
-        static let track = surface3
-
         // MARK: Tint Helpers
 
         /// Very subtle tint for status card backgrounds (0.05)
@@ -177,14 +171,6 @@ enum AppStyle {
         }
     }
 
-    /// Color for fatigue level: red (high), orange (medium), yellow (low)
-    static func fatigueColor(_ fatigue: Double) -> Color {
-        switch fatigue {
-        case 0.6...1.0: return Colors.error
-        case 0.3..<0.6: return Colors.warning
-        default: return Colors.caution
-        }
-    }
 }
 
 // MARK: - Color Hex Extension

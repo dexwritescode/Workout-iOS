@@ -129,11 +129,6 @@ final class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
         center.removePendingNotificationRequests(withIdentifiers: [dailyReminderID])
     }
     
-    /// Removes delivered notifications from the notification center.
-    func clearDeliveredNotifications() {
-        center.removeAllDeliveredNotifications()
-    }
-    
     // MARK: - Helpers
     
     private func reminderBody() -> String {
