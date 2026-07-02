@@ -11,7 +11,6 @@ import SwiftUI
 struct ExerciseDetailView: View {
     let exercise: Exercise
     @State private var showContent = false
-    @State private var showHistory = false
 
     var body: some View {
         ScrollView {

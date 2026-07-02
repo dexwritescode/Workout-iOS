@@ -64,7 +64,6 @@ struct MuscleSilhouetteView: View {
                             selectedMuscle = muscle.muscleGroup
                         }
                     }
-                    .animated(duration: 0.4)
                     .frame(height: 300)
                     .gesture(
                         DragGesture(minimumDistance: 30)
