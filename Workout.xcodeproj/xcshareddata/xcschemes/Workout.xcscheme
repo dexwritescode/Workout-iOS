@@ -39,6 +39,16 @@
                ReferencedContainer = "container:Workout.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DF380F912F04DD200040D500"
+               BuildableName = "WorkoutUITests.xctest"
+               BlueprintName = "WorkoutUITests"
+               ReferencedContainer = "container:Workout.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

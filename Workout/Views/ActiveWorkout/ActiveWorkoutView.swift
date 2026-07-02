@@ -19,6 +19,13 @@ struct ActiveWorkoutView: View {
     @State private var showExercisePicker = false
     @State private var selectedTrackingIndex: Int?
 
+    /// How long the post-save checkmark confirmation stays up before auto-dismissing.
+    /// Overridable via UITEST_SAVE_CONFIRMATION_DELAY so UI tests can reliably observe it
+    /// despite XCUITest's ~1s accessibility-snapshot polling interval.
+    private static var confirmationDismissDelay: Double {
+        ProcessInfo.processInfo.environment["UITEST_SAVE_CONFIRMATION_DELAY"].flatMap(Double.init) ?? 1.0
+    }
+
     var body: some View {
         Group {
             if let viewModel = coordinator.viewModel {
@@ -110,7 +117,11 @@ struct ActiveWorkoutView: View {
                     onSave: { notes in
                         viewModel.updateNotes(notes)
                         viewModel.saveWorkout()
-                        coordinator.clear()
+                        showSummary = false
+                        Task {
+                            try? await Task.sleep(for: .seconds(Self.confirmationDismissDelay))
+                            coordinator.clear()
+                        }
                     },
                     onDiscard: {
                         viewModel.discardWorkout()
